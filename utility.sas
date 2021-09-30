@@ -20,22 +20,34 @@ FILENAME utility URL ;
 /*Call in MSK template*/
 *go to sas program and view raw code to obtain URL;
 FILENAME msktemp URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/Templates.sas";
+%put "NOTE: using msktemp version ";
+
+
 %INCLUDE msktemp;
 /*Call in MSK SAS macros*/
 
 FILENAME table1 URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/main/table1.sas" ;
-/*FILENAME URL ;*/
-/*FILENAME URL ;*/
-/*FILENAME URL ;*/
-/*FILENAME URL ;*/
-/*FILENAME URL ;*/
-/*FILENAME URL ;*/
-/*FILENAME URL ;*/
-/*FILENAME URL ;*/
-/*FILENAME URL ;*/
 
+%symdel version;
 
+FILENAME version URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/main/version.sas";
+%INCLUDE version;
+%put &version;
+FILENAME table1 URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&version/table1.sas";
 %INCLUDE table1 ;
+
+/*FILENAME URL ;*/
+/*FILENAME URL ;*/
+/*FILENAME URL ;*/
+/*FILENAME URL ;*/
+/*FILENAME URL ;*/
+/*FILENAME URL ;*/
+/*FILENAME URL ;*/
+/*FILENAME URL ;*/
+/*FILENAME URL ;*/
+
+
+
 /*%INCLUDE ;*/
 /*%INCLUDE ;*/
 /*%INCLUDE ;*/
