@@ -12,26 +12,25 @@ utility program.
 
 *******************************************************************************/
 
-/*
-to add utility to your program use the following code:
-FILENAME utility URL ;
-%INCLUDE ;
-
 /*Call in MSK template*/
 *go to sas program and view raw code to obtain URL;
 FILENAME msktemp URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/Templates.sas";
-
-
 %INCLUDE msktemp;
+
+
 /*Call in MSK SAS macros*/
-
-FILENAME table1 URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/main/table1.sas" ;
-
+*call in macro (tag) version for all;
 FILENAME version URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/main/version.sas";
 %INCLUDE version;
 %put &version;
-FILENAME table1 URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&version/table1.sas";
+
+FILENAME table1 URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&table1v/table1.sas";
 %INCLUDE table1 ;
+%put Using Table 1 SAS Macro Version: &table1v;
+
+FILENAME table1loop URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&table1loopv/table1loop.sas";
+%INCLUDE table1loop ;
+%put Using Table 1 Loop SAS Macro Version: &table1loopv;
 
 /*FILENAME URL ;*/
 /*FILENAME URL ;*/
