@@ -36,13 +36,13 @@ FILENAME table1 URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/m
 
 
 %INCLUDE table1 ;
-%INCLUDE ;
-%INCLUDE ;
-%INCLUDE ;
-%INCLUDE ;
-%INCLUDE ;
-%INCLUDE ;
-%INCLUDE ;
+/*%INCLUDE ;*/
+/*%INCLUDE ;*/
+/*%INCLUDE ;*/
+/*%INCLUDE ;*/
+/*%INCLUDE ;*/
+/*%INCLUDE ;*/
+/*%INCLUDE ;*/
 
 
 
