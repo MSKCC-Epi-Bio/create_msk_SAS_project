@@ -1,13 +1,16 @@
-/***************************************************************
-Program name: utility
-Programmer: Hannah Kalvin & Stephanie Lobaugh
-Purpose:
-Version:
-Date: 2021-09-30
+/*******************************************************************************
+Program name: 	utility.sas
+Programmer: 	Hannah Kalvin & Stephanie Lobaugh
+Purpose: 		Read in all MSKCC templates and SAS macros necessary for a new project
+Date: 
+				2021-09-30: CREATED
+Language: 		SAS, VERSION 9.4
 Notes:
+This program includes all MSKCC templates and SAS macros available. If you 
+would like to read in a SAS macro by itself, please load the macro-specific
+utility program.
 
-
-*****************************************************************/
+*******************************************************************************/
 
 /*
 to add utility to your program use the following code:
