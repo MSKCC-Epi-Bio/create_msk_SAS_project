@@ -20,9 +20,10 @@ FILENAME msktemp URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_
 
 /*Call in MSK SAS macros*/
 *call in macro (tag) version for all;
-FILENAME version URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/main/version.sas";
+FILENAME version URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/version.sas";
 %INCLUDE version;
-%put &version;
+%put &=table1v 
+	 &=table1_loopv;
 
 FILENAME table1 URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&table1v/table1.sas";
 %INCLUDE table1 ;
@@ -30,7 +31,7 @@ FILENAME table1 URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&
 
 FILENAME table1loop URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&table1loopv/table1loop.sas";
 %INCLUDE table1loop ;
-%put Using Table 1 Loop SAS Macro Version: &table1loopv;
+%put Using Table 1 Loop SAS Macro Version: &table1_loopv;
 
 /*FILENAME URL ;*/
 /*FILENAME URL ;*/
