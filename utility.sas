@@ -29,7 +29,7 @@ FILENAME table1 URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&
 %INCLUDE table1 ;
 %put Using Table 1 SAS Macro Version: &table1v;
 
-FILENAME table1loop URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&table1loopv/table1loop.sas";
+FILENAME table1loop URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&table1_loopv/table1_loop.sas";
 %INCLUDE table1loop ;
 %put Using Table 1 Loop SAS Macro Version: &table1_loopv;
 
