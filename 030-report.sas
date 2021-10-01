@@ -1,70 +1,55 @@
 
 *****************************************************************************************************************
                                                                                                      
-   DESCRIPTION: Report 1
+DESCRIPTION: Generate report
+
+TOC (Use Ctr+F "X)" to navigate through code):
+1) Create macro vars to use in text of report
+2) Report
+
 ---------------------------------------------------------------------------------------------------------------
                                       
-   LANGUAGE:    SAS, VERSION 9.4                                  
-                                                                   
-   NAME:        Stephanie Lobaugh                               
-   DATE:        4/28/2020: Created                                                                                         
+LANGUAGE: SAS, VERSION 9.4                                  
+                                                               
+NAME:                               
+DATE: MM/DD/YYYY: Created                                                                                         
                                                                    
 ****************************************************************************************************************;
-
-* Program name;
-%Let pgm = 0x-report1;
-%Let pre = %substr(&pgm, 1, %index(&pgm, -)-1);
-
-* H Drive project path;
-%Let h = ;
-
-* GitHub repository path;
-%Let repos = ;
-
-* Set pathway for output;
-%Let path = &repos.\programs_and_output;
-
-* Data libraries;
-libname _all_ clear;
-%Let date = 2020-04-08;
-libname data "&h.\secure_data\&date";
-
-* Formats library;
-options nofmterr;
-libname fmt "&h.\secure_data";
-OPTIONS FMTSEARCH = (fmt.formats);
-
-* Macro library;
-libname gitmacs "C:\Users\lobaughs\GitHub\macros";
-options mstored sasmstore = gitmacs;
-
-* Escape character;
-ods escapechar = "^";
 
 * Today's date;
 %let today_yymmdd = %sysfunc(today(), yymmdd7.);
 %let today = %sysfunc(today(), worddate.);
 
+* Create program name numeric prefix as a source program identifier at the beginning of the file name 
+  for any output created in this program (e.g. "&pre._results_&today_yymmdd..rtf");
+%Let pre = 030;
+
+libname _all_ clear;
+
+* H Drive project path (data is saved within this folder);
+%Let h = ;
+
+* Local GitHub repository path (programs/output saved in this folder);
+%Let repos = ;
+
+* Data library;
+%Let date = YYYY-MM-DD;
+libname data "&h.\secure_data\&date";
+
+* Escape character;
+ods escapechar = "^";
+
 ods noproctitle;
 title;
 
-* Select dataset to use throughout;
-%let mydata = data.drvd;
-
 
 /**************************************************************************************************************
-	Create macro vars to use in text of report
+	1) Create macro vars to use in text of report
 **************************************************************************************************************/
 
-proc sql;
-	select count(distinct MRN)
-	into :numpatients trimmed
-	from &mydata;
-quit;
-
 
 /**************************************************************************************************************
-	Begin report
+	2) Report
 **************************************************************************************************************/
 
 ***** Begin rtf file;
@@ -73,8 +58,10 @@ quit;
 %Let style12 = fontsize = 12pt fontweight = bold fontfamily = Arial;
 %Let style11 = fontsize = 11pt fontfamily = Arial;
 
-ods rtf file = "&repos.\programs_and_output\&pre._[insert file description]_&today_yymmdd..rtf"
-	style = basicreport_arial bodytitle startpage = no
+ods rtf file = "&repos.\&pre._[insert file description]_&today_yymmdd..rtf"
+	style = styles.msk 
+	bodytitle 
+	startpage = no
     wordstyle = 
 "\s1 Heading 1
  \s2 Heading 2
@@ -86,11 +73,11 @@ proc odstext;
     / style = [&style16];
 	p "{}" / style = [fontsize = 11pt];
 
-	p "{Stephanie Lobaugh, MS \par &&today.}" 
+	p "{Name, Degree \par &&today.}" 
     / style = [&style11 fontstyle = italic];
 	p "{}" / style = [fontsize = 11pt];
 
-	p "{Output generated using the following dataset received from ___ on &date.:}" 
+	p "{Output generated using the following dataset received &date.:}" 
     / style = [&style11 fontstyle = italic];
 	p "{}" / style = [fontsize = 11pt];
 
@@ -101,8 +88,8 @@ proc odstext;
 	p "{}" / style = [fontsize = 11pt];
 run;
 
+*** Overview;
 proc odstext;
-	***** Overview;
 	p "{\pard\s1\b\ul Overview \par}" / style = {&style16};
 	p "{1.0  Study description}" 
     / style = [&style11];
@@ -110,17 +97,13 @@ proc odstext;
     / style = [&style11];
 	p "{3.0  Results}" 
     / style = [&style11];
-		p "{3.1  Descriptive tables}" 
+		p "{3.1  Heading2 A}" 
 	    / style = [&style11 leftmargin = 0.35in];
-			p "{3.1.1  Among all patients}" 
+			p "{3.1.1  Heading3 A}" 
 		    / style = [&style11 leftmargin = 0.7in];
-			p "{3.1.2  Among AML patients}" 
+			p "{3.1.2  Heading3 B}" 
 		    / style = [&style11 leftmargin = 0.7in];
-			p "{3.1.3  Among MDS patients}" 
-		    / style = [&style11 leftmargin = 0.7in];
-			p "{3.1.4  Among patients who got sCT}" 
-		    / style = [&style11 leftmargin = 0.7in];
-		p "{3.2  UVA Cox proportional hazards regression}" 
+		p "{3.2  Heading2 B}" 
 	    / style = [&style11 leftmargin = 0.35in];
 	p "{}" / style = [fontsize = 11pt];
 
@@ -141,10 +124,7 @@ proc odstext;
 	/ style = [&style11];	
 	p "{}" / style = [fontsize = 11pt];
 
-	p "{The analysis objectives included: (1) To evaluate associations between survival endpoints and 
- baseline variables, post-treatment measures, and new response criteria combining LI-RADS 
- and treatment responses (LR-TR), (2) To examine measures of association between LR-TR categories and mRECIST
- categories, and (3) To examine interrater agreement.}" 
+	p "{The analysis objectives included: (1) , (2) , and (3).}" 
 	/ style = [&style11];	
 	p "{}" / style = [fontsize = 11pt];
 run;
@@ -157,33 +137,28 @@ proc odstext;
 	/ style = [&style11 fontweight = bold];
 	p "{}" / style = [fontsize = 11pt];
 
-	p "{Kaplan-Meier survival curves and cumulative incidence functions (CIF) were generated to
- examine the survival and incidence experiences of the sample level with respect to overall survival (OS) and time to
- progression (TTP). Death was a competing risk for the TTP outcome. Univariable Cox proportional hazards 
- regression was used to analyze OS, and Fine-Gray competing risks regression was used to analyze TTP. 
- Baseline time for analyses involving baseline variables was defined as date of first embolization.
- Baseline time for analyses involving post-treatment measurements was defined as end of treatment data.
- A significance level of 0.05 was used throughout.}" 
+	p "{METHODS FOR ANALYSIS OBJECTIVE 1.}" 
 	/ style = [&style11 leftmargin = 0.35in];	
 	p "{}" / style = [fontsize = 11pt];
 
 	p "{Analysis objective (2)}" 
 	/ style = [&style11 fontweight = bold];
 	p "{}" / style = [fontsize = 11pt];
-	p "{We used Kendall's Tau and Spearman rank correlation coefficients to examine the relationships 
- between summary LR-TR categories and mRECIST categories for each expert reader.}" 
+
+	p "{METHODS FOR ANALYSIS OBJECTIVE 2.}" 
 	/ style = [&style11 leftmargin = 0.35in];	
 	p "{}" / style = [fontsize = 11pt];
 
 	p "{Analysis objective (3)}" 
 	/ style = [&style11 fontweight = bold];
 	p "{}" / style = [fontsize = 11pt];
-	p "{We calculated kappas and interclass correlations to assess interrater agreement.}" 
+
+	p "{METHODS FOR ANALYSIS OBJECTIVE 3.}" 
 	/ style = [&style11 leftmargin = 0.35in];	
 	p "{}" / style = [fontsize = 11pt];
 	
 	p "{All statistical computations were performed, and all output was generated using SAS Software Version 9.4
- (The SAS Institute, Cary, NC) and R version 3.5.3.}"
+ (The SAS Institute, Cary, NC).}"
     / style = [&style11];
 	p "{}" / style = [fontsize = 11pt];
 run;
@@ -197,12 +172,14 @@ proc odstext;
 	p "{}" / style = [fontsize = 11pt];
 run;
 
+* Example header 2;
 proc odstext;
-	p "{\pard\s2\b\ul 3.1 Descriptive tables \par}" / style = {&style14};
+	p "{\pard\s2\b\ul 3.1 Heading2 A \par}" / style = {&style14};
 run;
 
+* Example header 3;
 proc odstext;
-	p "{\pard\s3\b\ul 3.1.1 Among all patients \par}" / style = {&style12};
+	p "{\pard\s3\b\ul 3.1.1 Heading3 A \par}" / style = {&style12};
 run;
 
 ods rtf close;
