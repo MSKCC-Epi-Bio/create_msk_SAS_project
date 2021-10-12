@@ -19,6 +19,10 @@ DATE: MM/DD/YYYY: Created
                                                                    
 ****************************************************************************************************************;
 
+*include utility for MSK template and macros;
+FILENAME utility URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/utility.sas";
+%INCLUDE utility;
+
 * Today's date;
 %let today_yymmdd = %sysfunc(today(), yymmdd7.);
 %let today = %sysfunc(today(), worddate.);
