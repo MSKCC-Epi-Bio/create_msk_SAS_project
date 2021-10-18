@@ -14,24 +14,23 @@ utility program.
 
 /*Call in MSK template*/
 *go to sas program and view raw code to obtain URL;
-FILENAME msktemp URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/Templates.sas";
+FILENAME msktemp URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/create_msk_SAS_project/main/Templates.sas";
 %INCLUDE msktemp;
 
 
 /*Call in MSK SAS macros*/
 *call in macro (tag) version for all;
-FILENAME version URL "https://raw.githubusercontent.com/slobaugh/create_msk_SAS_project/main/version.sas";
+FILENAME version URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/create_msk_SAS_project/main/version.sas";
 %INCLUDE version;
-%put &=table1v 
-	 &=table1_loopv;
+%put &=version;
 
-FILENAME table1 URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&table1v/table1.sas";
+FILENAME table1 URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/msk_SAS_macros/&version/Table1/table1.sas";
 %INCLUDE table1 ;
-%put Using Table 1 SAS Macro ('%table1') Version: &table1v;
+%put Using Table 1 SAS Macro ('%table1') Version: &version;
 
-FILENAME t1l URL "https://raw.githubusercontent.com/slobaugh/msk_SAS_macros/&table1_loopv/table1loop.sas";
+FILENAME t1l URL "https://raw.githubusercontent.com/MSKCC-Epi-Bio/msk_SAS_macros/&version/Table1loop/table1loop.sas";
 %INCLUDE t1l ;
-%put Using Table 1 Loop SAS Macro ('%table1loop') Version: &table1_loopv;
+%put Using Table 1 Loop SAS Macro ('%table1loop') Version: &version;
 
 /*FILENAME URL ;*/
 /*FILENAME URL ;*/
